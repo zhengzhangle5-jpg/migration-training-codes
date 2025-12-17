@@ -1,4 +1,4 @@
-package com.migration;
+package com.migration.day02;
 
 import java.sql.*;
 

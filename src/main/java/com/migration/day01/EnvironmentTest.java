@@ -1,4 +1,4 @@
-package com.migration;
+package com.migration.day01;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
