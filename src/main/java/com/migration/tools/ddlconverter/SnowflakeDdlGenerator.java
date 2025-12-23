@@ -39,7 +39,7 @@ public class SnowflakeDdlGenerator {
             case "NUMBER" -> c.scale() > 0
                     ? "NUMBER(" + c.size() + "," + c.scale() + ")"
                     : "NUMBER(" + c.size() + ")";
-            case "DATE" -> "DATE";
+            case "DATE" -> "TIMESTAMP_NTZ";
             default -> "VARCHAR";
         };
     }
