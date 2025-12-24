@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    snowflake:
+      driver-class-name: net.snowflake.client.jdbc.SnowflakeDriver
+      url: jdbc:snowflake://PCNZPCZ-QB93968.snowflakecomputing.com/
+      username: zzl
+      password: 20030828zzlZzl
+
+      hikari:
+        pool-name: snowflake-hikari
+#        maximum-pool-size: 10
+#        minimum-idle: 2
+#        connection-timeout: 60000
+#        idle-timeout: 300000
+#        max-lifetime: 1200000
+        maximum-pool-size: 5  #池子小
+        minimum-idle: 5 #全是假活连接
+        connection-timeout: 30000 #等待时间短
+        idle-timeout: 600000  #空间太久被后端回收
+        max-lifetime: 1800000 #生命周期过长，云服务不稳定，可能因为断网、session刷新、TLS重建导致僵尸连接
+        leak-detection-threshold: 0 #故意关掉泄露探测器
+
+        data-source-properties:
+          db: MIGRATION_TRAINING
+          schema: PRACTICE
+          warehouse: COMPUTE_WH
+          role: ACCOUNTADMIN
+          CLIENT_SESSION_KEEP_ALIVE: true
+
+    oracle:
+      driver-class-name: oracle.jdbc.OracleDriver
+      url: jdbc:oracle:thin:@//192.168.0.120:1521/XEPDB1
+      username: migration_user
+      password: MigrationPass123
+
+      hikari:
+        pool-name: oracle-hikari
+        maximum-pool-size: 30
+        minimum-idle: 5
+        connection-timeout: 30000
+        idle-timeout: 600000
+        max-lifetime: 1800000
