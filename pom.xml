@@ -43,13 +43,13 @@
         </dependency>
 
 
-        <!-- JUnit 5 (单元测试) -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.9.3</version>
-            <scope>test</scope>
-        </dependency>
+<!--        &lt;!&ndash; JUnit 5 (单元测试) &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter</artifactId>-->
+<!--            <version>5.9.3</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
 
         <!-- SLF4J + Logback (日志) -->
         <dependency>
@@ -63,6 +63,31 @@
             <artifactId>slf4j-api</artifactId>
             <version>2.0.9</version>
         </dependency>
+
+        <!-- JUnit 5：单元测试框架 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito：用来 mock 数据库 -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito + JUnit5 整合 -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+
 
 
     </dependencies>
