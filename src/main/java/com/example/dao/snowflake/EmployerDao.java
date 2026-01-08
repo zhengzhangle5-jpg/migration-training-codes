@@ -1,5 +1,7 @@
 package com.example.dao.snowflake;
 
+import com.example.dao.oracle.Employer;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +34,7 @@ public class EmployerDao {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    com.example.dao.snowflake.Employer employer = new Employer();
+                    com.example.dao.oracle.Employer employer = new Employer();
                     employer.setId(rs.getInt("EMPLOYER_ID"));
                     employer.setName(rs.getString("EMPLOYER_NAME"));
                     employer.setIndustry(rs.getString("INDUSTRY"));

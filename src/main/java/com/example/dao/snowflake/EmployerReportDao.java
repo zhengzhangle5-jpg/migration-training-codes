@@ -1,6 +1,6 @@
 package com.example.dao.snowflake;
 
-import com.example.dao.snowflake.IndustryReport;
+import com.example.dao.oracle.IndustryReport;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

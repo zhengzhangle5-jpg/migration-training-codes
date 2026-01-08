@@ -1,11 +1,11 @@
-package com.migration.day14;
+package com.migration.day13;
 
 import java.sql.*;
 import java.util.concurrent.*;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-public class ConnectionPoolExhaustionExample {
+public class ConnectionPoolOptimizedExample {
 
     public static void main(String[] args) throws Exception {
 
@@ -17,28 +17,42 @@ public class ConnectionPoolExhaustionExample {
         config.addDataSourceProperty("db", "MIGRATION_TRAINING");
         config.addDataSourceProperty("schema", "PRACTICE");
 
-        // ❌ 故意设置很小的连接池
-        config.setMaximumPoolSize(5);
-        config.setConnectionTimeout(1000); // 3 秒超时
+        // ❌ 原 case3：
+        // config.setMaximumPoolSize(5);
+
+        // ✅ 修改点 1：连接池大小与并发度匹配
+        // 原来 20 个并发线程抢 5 个连接，必然 timeout
+        config.setMaximumPoolSize(20);
+
+        // ✅ 修改点 2：合理的连接等待时间
+        // 避免短时间抖动就抛 timeout
+        config.setConnectionTimeout(30000); // 30 秒
+
+        // ✅ 修改点 3：Snowflake 场景推荐关闭 minimumIdle 预热
+        config.setMinimumIdle(0);
 
         HikariDataSource ds = new HikariDataSource(config);
 
-        // ❌ 并发线程数远大于连接池
+        // ❌ 原 case3：线程池远大于连接池
+        // ExecutorService executor = Executors.newFixedThreadPool(20);
+
+        // ✅ 修改点 4：线程池大小与连接池一致
         ExecutorService executor = Executors.newFixedThreadPool(20);
+
+        long start = System.currentTimeMillis();
 
         for (int i = 0; i < 20; i++) {
             executor.submit(() -> {
 
                 try (Connection conn = ds.getConnection()) {
 
-                    // ✅ 关键修改 1：禁用 Result Cache（每个连接都要）
+                    // （可选）关闭 Result Cache，确保每次都是实际查询
                     try (Statement stmt = conn.createStatement()) {
                         stmt.execute(
                                 "ALTER SESSION SET USE_CACHED_RESULT = FALSE"
                         );
                     }
 
-                    // ✅ 关键修改 2：执行真实、耗时的查询
                     try (PreparedStatement ps =
                                  conn.prepareStatement(
                                          "SELECT COUNT(*) " +
@@ -55,7 +69,7 @@ public class ConnectionPoolExhaustionExample {
                     }
 
                 } catch (Exception e) {
-                    // ❌ 预期会出现大量 timeout / pool exhausted
+                    // ✅ 优化后：理论上不应再出现 timeout
                     System.err.println(
                             Thread.currentThread().getName() +
                                     " -> ERROR: " + e.getMessage()
@@ -66,6 +80,9 @@ public class ConnectionPoolExhaustionExample {
 
         executor.shutdown();
         executor.awaitTermination(5, TimeUnit.MINUTES);
+
+        long end = System.currentTimeMillis();
+        System.out.println("Total Execution Time(ms): " + (end - start));
 
         ds.close();
     }
