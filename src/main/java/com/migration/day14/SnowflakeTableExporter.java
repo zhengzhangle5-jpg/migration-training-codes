@@ -1,6 +1,6 @@
 package com.migration.day14;
 
-import com.migration.tools.common.CsvUtil;
+import com.migration.tools.common.CsvWriterUtil;
 import com.migration.tools.common.SnowflakeConnectionUtil;
 
 import java.sql.Connection;
@@ -38,7 +38,7 @@ public class SnowflakeTableExporter {
 
             ResultSet rs = ps.executeQuery();
             String fileName = tableName + "-" + suffix + ".csv";
-            CsvUtil.writeResultSet(rs, fileName);
+            CsvWriterUtil.writeResultSet(rs, fileName);
 
             System.out.println("Snowflake 导出完成: " + fileName);
         }

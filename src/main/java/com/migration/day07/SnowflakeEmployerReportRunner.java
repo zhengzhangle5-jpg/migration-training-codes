@@ -1,6 +1,6 @@
 package com.migration.day07;
 
-import com.example.dao.snowflake.IndustryReport;
+import com.example.dao.oracle.IndustryReport;
 import com.example.dao.snowflake.EmployerReportDao;
 import com.migration.tools.common.SnowflakeConnectionUtil;
 

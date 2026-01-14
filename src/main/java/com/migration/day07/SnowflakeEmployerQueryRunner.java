@@ -1,6 +1,6 @@
 package com.migration.day07;
 
-import com.example.dao.snowflake.Employer;
+import com.example.dao.oracle.Employer;
 import com.example.dao.snowflake.EmployerDao;
 import com.migration.tools.common.SnowflakeConnectionUtil;
 

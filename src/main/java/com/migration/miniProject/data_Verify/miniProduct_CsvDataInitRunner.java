@@ -1,4 +1,4 @@
-package com.migration.day14;
+package com.migration.miniProject.data_Verify;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -8,13 +8,17 @@ import java.nio.file.StandardCopyOption;
 /**
  * Day14 CSV 初始化启动类（目录规范版）
  */
-public class CsvDataInitRunner {
+public class miniProduct_CsvDataInitRunner {
 
     private static final String[] TABLES = {
-            "DEPARTMENTS", "USERS", "PRODUCTS", "ORDERS", "PAYMENTS"
+            "ORDERS",
+            "ORDER_ITEMS",
+            "PRODUCTS",
+            "CATEGORIES",
+            "CUSTOMERS"
     };
 
-    private static final String BASE_DIR = "data";
+    private static final String BASE_DIR = "data/miniProject";
     private static final String ORACLE_DIR = BASE_DIR + File.separator + "oracle";
     private static final String SNOWFLAKE_DIR = BASE_DIR + File.separator + "snowflake";
 
